@@ -4,11 +4,11 @@ PHP ETL (Extract–Transform–Load) with a REST API and web UI. Three projects:
 
 | Project | Role |
 |---------|------|
-| **source-watcher-core** | ETL engine (extractors, transformers, loaders) |
-| **source-watcher-api** | REST API (auth, DB, endpoints) |
-| **source-watcher-board** | Web UI (login, transformations canvas) |
+| **[source-watcher-core](https://github.com/TheCocoTeam/source-watcher-core)** | ETL engine (extractors, transformers, loaders) |
+| **[source-watcher-api](https://github.com/TheCocoTeam/source-watcher-api)** | REST API (auth, DB, endpoints) |
+| **[source-watcher-board](https://github.com/TheCocoTeam/source-watcher-board)** | Web UI (login, transformations canvas) |
 
-**Stack:** Core and API require **PHP 8.4**. The board is a front-end that calls the API over HTTP; see **source-watcher-board/README.md** to run it.
+**Stack:** Core and API require **PHP 8.4**. The board is a front-end that calls the API over HTTP; see [source-watcher-board README](https://github.com/TheCocoTeam/source-watcher-board#readme) to run it.
 
 ## Commands (from repo root)
 
@@ -30,7 +30,7 @@ sudo docker build -f Dockerfile.dev -t source-watcher-dev:latest .
 
 ### 2. Installing dependencies
 
-Install **Core** first, then **API** (the API uses Core via a Composer path repo and needs `source-watcher-core` as a sibling directory).
+Install **Core** first, then **API** (the API uses Core via a Composer path repo and needs `source-watcher-core` as a sibling directory when you clone all repos under one root).
 
 **Core:**
 ```bash
@@ -106,7 +106,7 @@ cd source-watcher-api
 sudo docker compose down
 ```
 
-See **source-watcher-api/README.md** for env vars and endpoints.
+See the [source-watcher-api README](https://github.com/TheCocoTeam/source-watcher-api#readme) for env vars and endpoints.
 
 ### 7. Running the board (Docker)
 
@@ -131,8 +131,8 @@ cd source-watcher-board
 sudo docker compose down
 ```
 
-See **source-watcher-board/README.md** for API URL configuration and project layout.
+See the [source-watcher-board README](https://github.com/TheCocoTeam/source-watcher-board#readme) for API URL configuration and project layout.
 
 ## Samples (source-watcher-core)
 
-Runnable ETL pipelines live under **source-watcher-core/samples/**. See **source-watcher-core/samples/README.md** for how to run each sample (Docker commands).
+Runnable ETL pipelines live under **source-watcher-core/samples/**. See the [source-watcher-core samples README](https://github.com/TheCocoTeam/source-watcher-core/tree/master/samples#readme) for how to run each sample (Docker commands).
