@@ -2,8 +2,11 @@
 # Rebuild after changes: docker compose -f docker-compose.dev.yml build
 FROM composer:2
 
-RUN apk add --no-cache postgresql-dev autoconf dpkg-dev file g++ gcc libc-dev make pkgconf re2c \
-    && docker-php-ext-install pdo_pgsql pgsql \
+RUN apk add --no-cache postgresql-dev libpng-dev libjpeg-turbo-dev freetype-dev \
+        tesseract-ocr tesseract-ocr-data-eng \
+        autoconf dpkg-dev file g++ gcc libc-dev make pkgconf re2c \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_pgsql pgsql gd \
     && pecl install pcov \
     && docker-php-ext-enable pcov \
     && apk del --no-cache autoconf dpkg-dev file g++ gcc libc-dev make pkgconf re2c
