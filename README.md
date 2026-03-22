@@ -8,13 +8,13 @@ PHP ETL (Extract-Transform-Load) with a REST API and web UI.
 | **[source-watcher-api](https://github.com/TheCocoTeam/source-watcher-api)** | REST API (auth, DB, pipeline endpoints) |
 | **[source-watcher-board](https://github.com/TheCocoTeam/source-watcher-board)** | Web UI (login, drag-and-drop pipeline canvas) |
 
-**Stack:** PHP 8.4, Docker. No local PHP needed — everything runs in containers.
+**Stack:** PHP 8.4, Docker. No local PHP needed - everything runs in containers.
 
 ---
 
 ## Get running
 
-### Step 1 — Clone this repo and the three sub-projects
+### Step 1 - Clone this repo and the three sub-projects
 
 ```bash
 git clone https://github.com/TheCocoTeam/source-watcher-quickstart
@@ -36,7 +36,7 @@ source-watcher-quickstart/
   README.md
 ```
 
-### Step 2 — Set up the API environment
+### Step 2 - Set up the API environment
 
 ```bash
 cd source-watcher-api
@@ -45,11 +45,11 @@ cp .env.example .env
 
 The defaults in `.env` work for local development. No changes needed to get started.
 
-### Step 3 — Install Composer dependencies
+### Step 3 - Install Composer dependencies
 
 Run these from inside `source-watcher-quickstart/` (the root of this repo):
 
-**Core** (install first — the API depends on it):
+**Core** (install first - the API depends on it):
 ```bash
 docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
 ```
@@ -59,7 +59,7 @@ docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "c
 docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
 ```
 
-### Step 4 — Start the API
+### Step 4 - Start the API
 
 From inside `source-watcher-quickstart/source-watcher-api/`:
 
@@ -72,7 +72,7 @@ docker compose up -d --build api
 
 To stop: `docker compose down`
 
-### Step 5 — Start the board
+### Step 5 - Start the board
 
 From inside `source-watcher-quickstart/source-watcher-board/`:
 
@@ -85,7 +85,7 @@ docker compose up -d --build web-server
 
 To stop: `docker compose down`
 
-### Step 6 — Log in
+### Step 6 - Log in
 
 Open http://localhost:8080/ and log in. Default credentials are seeded by `source-watcher-api/src/phinx/Database/Seeds/UserSeeder.php`. The default password is `secret`.
 
