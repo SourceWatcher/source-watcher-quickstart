@@ -1,6 +1,6 @@
 # Source Watcher
 
-PHP ETL (Extract–Transform–Load) with a REST API and web UI. Three projects:
+PHP ETL (Extract-Transform-Load) with a REST API and web UI. Three projects:
 
 | Project | Role |
 |---------|------|
@@ -8,131 +8,167 @@ PHP ETL (Extract–Transform–Load) with a REST API and web UI. Three projects:
 | **[source-watcher-api](https://github.com/TheCocoTeam/source-watcher-api)** | REST API (auth, DB, endpoints) |
 | **[source-watcher-board](https://github.com/TheCocoTeam/source-watcher-board)** | Web UI (login, transformations canvas) |
 
-**Stack:** Core and API require **PHP 8.4**. The board is a front-end that calls the API over HTTP; see [source-watcher-board README](https://github.com/TheCocoTeam/source-watcher-board#readme) to run it.
+**Stack:** Core and API require **PHP 8.4**. The board is a front-end that calls the API over HTTP.
 
-## Commands (from repo root)
+---
 
-Use `docker run` so you don't depend on Docker Compose networks (avoids iptables issues on some hosts).
+## Folder structure
+
+This repository (`source-watcher-dev-env`) is the development environment. It expects the following layout, with all three sub-projects cloned as siblings inside this folder:
+
+```
+source-watcher-dev-env/
+  source-watcher-core/    ← clone of source-watcher-core
+  source-watcher-api/     ← clone of source-watcher-api
+  source-watcher-board/   ← clone of source-watcher-board
+  docker-compose.dev.yml
+  Dockerfile.dev
+  README.md
+```
+
+Clone all three before running any commands:
+
+```bash
+git clone https://github.com/TheCocoTeam/source-watcher-core
+git clone https://github.com/TheCocoTeam/source-watcher-api
+git clone https://github.com/TheCocoTeam/source-watcher-board
+```
+
+---
+
+## Commands (from `source-watcher-dev-env/` root)
 
 ### 1. Build the Docker dev environment (first time)
 
 Do this once, and again after any change to `Dockerfile.dev`:
 
 ```bash
-sudo docker compose -f docker-compose.dev.yml build
+docker compose -f docker-compose.dev.yml build
 ```
 
 If Compose fails, build the image directly:
 
 ```bash
-sudo docker build -f Dockerfile.dev -t source-watcher-dev:latest .
+docker build -f Dockerfile.dev -t source-watcher-dev:latest .
 ```
 
-### 2. Installing dependencies
+### 2. Install dependencies
 
-Install **Core** first, then **API** (the API uses Core via a Composer path repo and needs `source-watcher-core` as a sibling directory when you clone all repos under one root).
+Install **Core** first, then **API** (the API depends on Core via a Composer path repository).
 
 **Core:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
 ```
 
-**API:** (from repo root so the path to Core is valid)
+**API:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "composer install --no-interaction --ignore-platform-reqs"
 ```
 
-### 3. Updating lock file
+### 3. Update lock files
 
 **Core:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "composer update --no-interaction --ignore-platform-reqs"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "composer update --no-interaction --ignore-platform-reqs"
 ```
 
-**API:** (from repo root so the path to Core is valid)
+**API:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "composer update --no-interaction --ignore-platform-reqs"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "composer update --no-interaction --ignore-platform-reqs"
 ```
 
-### 4. Running tests
+### 4. Run tests
 
 Run after installing dependencies (step 2).
 
 **Core:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "./vendor/bin/phpunit"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core composer:2 sh -c "./vendor/bin/phpunit"
 ```
 
 **API:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "./vendor/bin/phpunit"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api composer:2 sh -c "./vendor/bin/phpunit"
 ```
 
-### 5. Running code coverage
+### 5. Run code coverage
 
 Requires the dev image (step 1). Run after installing dependencies (step 2).
 
 **Core:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core source-watcher-dev:latest sh -c "./vendor/bin/phpunit --coverage-text"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-core source-watcher-dev:latest sh -c "./vendor/bin/phpunit --coverage-text"
 ```
 
-- **Text:** summary is printed in the terminal.
-- **HTML:** open `source-watcher-core/phpunit-report/coverage-html/index.html` in a browser for a line-by-line report.
+Open `source-watcher-core/phpunit-report/coverage-html/index.html` in a browser for a line-by-line HTML report.
 
 **API:**
 ```bash
-sudo docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api source-watcher-dev:latest sh -c "./vendor/bin/phpunit --coverage-text"
+docker run --rm -v "$(pwd)":/app -w /app/source-watcher-api source-watcher-dev:latest sh -c "./vendor/bin/phpunit --coverage-text"
 ```
 
-**Optional:** After building `source-watcher-dev:latest`, you can use it instead of `composer:2` for the commands above and drop `--ignore-platform-reqs`.
+---
 
-### 6. Running the API (Docker)
+## Running the stack
 
-The API serves auth and endpoints on port **8181** and needs MySQL. From the **dev-env** directory:
+### 6. Run the API
+
+From inside `source-watcher-dev-env/source-watcher-api/`:
 
 ```bash
 cd source-watcher-api
-sudo docker compose up -d --build api
+docker compose up -d --build api
 ```
 
-- **API:** http://localhost:8181/  
-- MySQL runs in the same stack; the board (step 7) should call this API URL for login.
+- **API:** http://localhost:8181/
+- MySQL runs in the same stack on port 3306.
 
 To stop:
-
 ```bash
-cd source-watcher-api
-sudo docker compose down
+docker compose down
 ```
 
-See the [source-watcher-api README](https://github.com/TheCocoTeam/source-watcher-api#readme) for env vars and endpoints.
+**Environment variables:** Copy `.env.example` to `.env` inside `source-watcher-api/` and adjust if needed. The defaults work for local development.
 
-### 7. Running the board (Docker)
+**Default login credentials** are seeded by `UserSeeder.php` (`src/phinx/Database/Seeds/UserSeeder.php`). Check that file for the current username and password. The default password is `secret`.
 
-The board is a separate web app (PHP + Apache). Run it with its own Compose file so the API can stay on port 8181 and the board on 8080. Start the **API** first (step 6).
+### 7. Run the board
 
-From the **dev-env** directory:
+Start the API first (step 6), then from inside `source-watcher-dev-env/source-watcher-board/`:
 
 ```bash
 cd source-watcher-board
-sudo docker compose up -d --build web-server
+docker compose up -d --build web-server
 ```
 
 - **Board:** http://localhost:8080/
-- **phpMyAdmin** (if you use the full board compose): http://localhost:5000/
-
-Ensure the Source Watcher API (e.g. **source-watcher-api** on port 8181) is running and that the board’s API base URL in `html/assets/js/views/login.js` and `html/assets/js/views/transformations.js` matches your API URL.
+- Log in with the credentials from step 6.
 
 To stop:
-
 ```bash
-cd source-watcher-board
-sudo docker compose down
+docker compose down
 ```
 
-See the [source-watcher-board README](https://github.com/TheCocoTeam/source-watcher-board#readme) for API URL configuration and project layout.
+**API URL configuration:** The board's API base URL (`http://localhost:8181`) is configured directly in `html/transformations.php`. Update the `STEPS_API_URL`, `TRANSFORMATION_API_URL`, and `TRANSFORMATION_RUN_API_URL` constants near the top of that file if your API runs on a different host or port.
+
+---
+
+## Pipeline data directory
+
+The API container mounts `.source-watcher/` from `source-watcher-api/` into `/var/www/html/.source-watcher/` inside the container. This directory holds:
+
+```
+source-watcher-api/.source-watcher/
+  transformations/    ← .json pipeline files (loaded by the board and API)
+  data/               ← local input files (CSVs, text files, etc.)
+  *.db                ← SQLite output files written by pipeline runs
+```
+
+Example pipelines are available at **[source-watcher-examples](https://github.com/TheCocoTeam/source-watcher-examples)**. To use them, clone or copy the `.json` pipeline files into `source-watcher-api/.source-watcher/transformations/`.
+
+---
 
 ## Samples (source-watcher-core)
 
-Runnable ETL pipelines live under **source-watcher-core/samples/**. See the [source-watcher-core samples README](https://github.com/TheCocoTeam/source-watcher-core/tree/master/samples#readme) for how to run each sample (Docker commands).
+Runnable ETL pipelines live under **source-watcher-core/samples/**. See the [source-watcher-core samples README](https://github.com/TheCocoTeam/source-watcher-core/tree/master/samples#readme) for how to run each sample.
