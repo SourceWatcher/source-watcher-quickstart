@@ -3,7 +3,7 @@
 FROM composer:2
 
 RUN apk add --no-cache postgresql-dev libpng-dev libjpeg-turbo-dev freetype-dev \
-        tesseract-ocr tesseract-ocr-data-eng \
+        tesseract-ocr tesseract-ocr-data-eng poppler-utils \
         autoconf dpkg-dev file g++ gcc libc-dev make pkgconf re2c \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_pgsql pgsql gd \
