@@ -5,6 +5,11 @@ Created: 2026-07-26
 This roadmap collects potential improvements to Source Watcher in an order that
 supports implementing, testing, and documenting one feature at a time.
 
+## Additional completed improvements
+
+- [x] Display toastr notifications for successful and failed pipeline runs.
+- [x] Support visible transformation notes stored in saved transformation JSON.
+
 ## Working conventions
 
 - Implement one numbered item per change.
@@ -78,12 +83,12 @@ Example:
 
 ### 4. Select and Drop Columns transformer
 
-- [ ] Support an inclusion list.
-- [ ] Support an exclusion list.
-- [ ] Reject ambiguous configurations that specify both modes.
-- [ ] Define behavior for requested columns that do not exist.
-- [ ] Preserve the configured column order in inclusion mode.
-- [ ] Add API, board, tests, and an example pipeline.
+- [x] Support an inclusion list.
+- [x] Support an exclusion list.
+- [x] Use an explicit mode so include and exclude cannot be configured together.
+- [x] Define behavior for requested columns that do not exist.
+- [x] Preserve the configured column order in inclusion mode.
+- [x] Add API, board, tests, and an example pipeline.
 
 ### 5. Derive Field transformer
 
