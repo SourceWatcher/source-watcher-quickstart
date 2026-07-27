@@ -17,6 +17,7 @@ supports implementing, testing, and documenting one feature at a time.
 2. Sort Rows execution transformer
 3. Deduplicate Rows execution transformer
 4. Choose Columns transformer
+5. Derive Field transformer
 
 ## Working conventions
 
@@ -100,14 +101,14 @@ Example:
 
 ### 5. Derive Field transformer
 
-- [ ] Create a field from existing row values.
-- [ ] Design a constrained expression language without arbitrary PHP
+- [x] Create a field from existing row values.
+- [x] Design a constrained expression language without arbitrary PHP
   execution.
-- [ ] Initially support literals, field references, concatenation, arithmetic,
+- [x] Initially support literals, field references, concatenation, arithmetic,
   null coalescing, and basic string/date functions.
-- [ ] Define conversion and error behavior.
-- [ ] Add expression validation before a pipeline run begins.
-- [ ] Add API, board, tests, and example pipelines.
+- [x] Define conversion and error behavior.
+- [x] Validate expression syntax and supported functions while building the pipeline, before execution.
+- [x] Add API, board, tests, and example pipelines.
 
 ### 6. Type Conversion transformer
 
