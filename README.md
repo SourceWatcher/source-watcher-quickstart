@@ -93,8 +93,8 @@ To stop: `docker compose down` (from inside `source-watcher-board/`)
 
 Open http://localhost:8080/ and log in with the default credentials seeded by `source-watcher-api/src/phinx/Database/Seeds/UserSeeder.php`:
 
-- **Username:** `jpruiz114`
-- **Password:** `secret`
+- **Username:** `admin`
+- **Password:** `test`
 
 ---
 
