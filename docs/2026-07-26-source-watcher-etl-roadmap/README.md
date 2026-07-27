@@ -9,6 +9,14 @@ supports implementing, testing, and documenting one feature at a time.
 
 - [x] Display toastr notifications for successful and failed pipeline runs.
 - [x] Support visible transformation notes stored in saved transformation JSON.
+- [x] Add descriptive notes to every tracked example transformation.
+
+## Completed roadmap items
+
+1. Filter Rows transformer
+2. Sort Rows execution transformer
+3. Deduplicate Rows execution transformer
+4. Choose Columns transformer
 
 ## Working conventions
 
