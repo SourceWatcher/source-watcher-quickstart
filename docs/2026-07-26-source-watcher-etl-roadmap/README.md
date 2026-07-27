@@ -18,6 +18,8 @@ supports implementing, testing, and documenting one feature at a time.
 3. Deduplicate Rows execution transformer
 4. Choose Columns transformer
 5. Derive Field transformer
+6. Type Conversion transformer
+7. Validate Rows transformer
 
 ## Working conventions
 
@@ -112,20 +114,20 @@ Example:
 
 ### 6. Type Conversion transformer
 
-- [ ] Convert fields to integer, float, string, boolean, date, and datetime.
-- [ ] Support strict and forgiving modes.
-- [ ] Configure null and empty-string handling.
-- [ ] Return actionable conversion errors containing the field and value.
-- [ ] Add API, board, tests, and an example pipeline.
+- [x] Convert fields to integer, float, string, boolean, date, and datetime.
+- [x] Support strict and forgiving modes.
+- [x] Configure null and empty-string handling.
+- [x] Return actionable conversion errors containing the field and value.
+- [x] Add API, board, tests, and an example pipeline.
 
 ### 7. Validate Rows transformer
 
-- [ ] Validate required fields, types, formats, allowed values, and numeric or
+- [x] Validate required fields, types, formats, allowed values, and numeric or
   date ranges.
-- [ ] Support common formats such as email, URL, UUID, and regular expression.
-- [ ] Support fail-fast and annotate-row modes.
-- [ ] Prepare validation results for future rejected-row routing.
-- [ ] Add API, board, tests, and an example pipeline.
+- [x] Support common formats such as email, URL, UUID, and regular expression.
+- [x] Support fail-fast and annotate-row modes.
+- [x] Prepare validation results for future rejected-row routing.
+- [x] Add API, board, tests, and an example pipeline.
 
 Example:
 
