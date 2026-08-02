@@ -1,5 +1,5 @@
 # Development-only: run Composer and PHPUnit without local PHP.
-# The php service uses Dockerfile.dev (Composer + ext-pgsql) so composer update respects platform reqs.
+# The php service uses Dockerfile.dev (PHP 8.5 + Composer + ext-pgsql + PCOV); same 8.5 line as CircleCI cimg/php:8.5.
 #
 # Compose (recommended; image has pgsql):
 #   docker compose -f docker-compose.dev.yml run --rm php sh -c "cd source-watcher-core && composer update"
@@ -14,6 +14,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        # Match CircleCI job image major.minor (see source-watcher-core/.circleci/config.yml).
+        PHP_IMAGE: php:8.5-cli-alpine
     image: source-watcher-dev:latest
     working_dir: /app
     volumes:

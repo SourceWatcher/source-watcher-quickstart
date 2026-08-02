@@ -1,6 +1,15 @@
-# Dev image: Composer + PHP extensions (ext-pgsql, PCOV for code coverage).
+# Dev image: PHP 8.5 (same major.minor as CircleCI cimg/php:8.5) + Composer + extensions.
+# Pin PHP_IMAGE if you need an exact patch (e.g. php:8.5.3-cli-alpine).
 # Rebuild after changes: docker compose -f docker-compose.dev.yml build
-FROM composer:2
+ARG PHP_IMAGE=php:8.5-cli-alpine
+
+FROM composer:2 AS composer_upstream
+
+FROM ${PHP_IMAGE}
+
+COPY --from=composer_upstream /usr/bin/composer /usr/bin/composer
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN apk add --no-cache postgresql-dev libpng-dev libjpeg-turbo-dev freetype-dev \
         tesseract-ocr tesseract-ocr-data-eng poppler-utils \
